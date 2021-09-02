@@ -1,9 +1,11 @@
 use actix_web::{get, App, HttpResponse, HttpServer, Responder};
-use std::time::Duration;
+// use std::time::Duration;
+use tokio::time::{sleep, Duration};
 
 #[get("/duration")]
 async fn duration() -> impl Responder {
-    std::thread::sleep(Duration::from_secs(5)); // <-- Bad practice! Will cause the current worker thread to hang!
+    // std::thread::sleep(Duration::from_secs(5)); // <-- Bad practice! Will cause the current worker thread to hang!
+    sleep(Duration::from_secs(5)).await;
     HttpResponse::Ok().body("Delay for 5 seconds...")
 }
 
